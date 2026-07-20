@@ -1,0 +1,35 @@
+# CI du front Assistant Financier — s'exécute à chaque push et sur chaque pull request.
+# Résultats : onglet "Actions" du repo GitHub (✅/❌ aussi visible sur chaque commit).
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  verifications:
+    name: Lint & build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Installation des dépendances
+        run: npm ci
+
+      - name: Lint (ESLint)
+        run: npm run lint
+
+      - name: Build (tsc + vite)
+        run: npm run build
+
+  image-docker:
+    name: Image Docker de production
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build de l'image prod (nginx)
+        run: docker build --target prod -t assistant-financier-client:ci .
