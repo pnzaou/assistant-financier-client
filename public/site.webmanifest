@@ -1,0 +1,14 @@
+{
+  "name": "Assistant financier",
+  "short_name": "AFI",
+  "description": "Gestion de finances personnelles",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#faf9ef",
+  "theme_color": "#1a1a00",
+  "icons": [
+    { "src": "/icons/afi-icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/afi-icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icons/afi-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
