@@ -6,14 +6,7 @@ import { Inscription } from "./pages/Inscription";
 import { MotDePasseOublie } from "./pages/MotDePasseOublie";
 import { ReinitialiserMotDePasse } from "./pages/ReinitialiserMotDePasse";
 import { VerifierEmail } from "./pages/VerifierEmail";
-
-function Accueil() {
-  return (
-    <div style={{ padding: "var(--esp-4)" }}>
-      <h1>Tableau de bord (à venir)</h1>
-    </div>
-  );
-}
+import { Accueil } from "./pages/Accueil";
 
 function App() {
   return (
@@ -25,6 +18,7 @@ function App() {
           <Route path="/mot-de-passe-oublie" element={<MotDePasseOublie />} />
           <Route path="/reinitialiser-mot-de-passe" element={<ReinitialiserMotDePasse />} />
           <Route path="/verifier-email" element={<VerifierEmail />} />
+          
           <Route
             path="/"
             element={
