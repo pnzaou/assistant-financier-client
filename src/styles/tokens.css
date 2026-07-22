@@ -1,0 +1,38 @@
+:root {
+  /* Couleurs */
+  --encre: #1a1a00;
+  --fond: #faf9ef;
+  --blanc: #ffffff;
+  --accent: #ffffcc;
+  --hairline: rgba(26, 26, 0, 0.08);
+
+  /* Texte (opacités de l'encre) */
+  --texte-fort: rgba(26, 26, 0, 0.9);
+  --texte: rgba(26, 26, 0, 0.7);
+  --texte-doux: rgba(26, 26, 0, 0.5);
+  --texte-faible: rgba(26, 26, 0, 0.38);
+
+  /* Sémantiques */
+  --succes: #3d6b2e;
+  --erreur: #8a2b2b;
+  --alerte: #9a5a2b;
+  --erreur-fond: #fbf2f2;
+
+  /* Rayons */
+  --rayon-carte: 20px;
+  --rayon-pill: 999px;
+  --rayon-champ: 14px;
+
+  /* Espacements */
+  --esp-1: 8px;
+  --esp-2: 16px;
+  --esp-3: 24px;
+  --esp-4: 32px;
+
+  /* Champs */
+  --hauteur-champ: 56px;
+
+  /* Typo */
+  --police: "Inter", system-ui, -apple-system, sans-serif;
+  --police-titre: "Manrope", "Inter", system-ui, sans-serif;
+}

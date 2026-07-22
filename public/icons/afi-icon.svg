@@ -1,0 +1,6 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AFI — Assistant financier">
+  <rect width="512" height="512" rx="180" fill="#1a1a00"/>
+  <polyline points="128,352 234,224 314,280 400,96"
+            fill="none" stroke="#ffffcc" stroke-width="42"
+            stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
