@@ -1,71 +1,43 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-import { api } from "../lib/api";
-import type { ReponseAuth, Utilisateur } from "../lib/types";
+import { useEffect, type ReactNode } from "react";
+import { useAuthStore } from "../stores/authStore";
+import type { DonneesInscription, IdentifiantsConnexion } from "../lib/types";
 
-interface IdentifiantsConnexion {
-  email: string;
-  motDePasse: string;
-}
+// ⚠️ Compatibilité. L'état d'auth vit désormais dans `stores/authStore.ts` :
+// il est accessible partout, sans Provider ni prop drilling.
+//
+//   const utilisateur = useUtilisateur();          // n'importe quel composant
+//   const { deconnecter } = useAuthStore.getState();  // hors composant
+//
+// Ce fichier ne reste que pour les écrans déjà écrits avec `useAuth()`.
+// Pour tout nouveau code : importer depuis `../stores`.
 
-interface DonneesInscription {
-  email: string;
-  motDePasse: string;
-  nom: string;
-  prenom: string;
-  telephone?: string;
-}
-
-interface AuthContexte {
-  utilisateur: Utilisateur | null;
-  chargement: boolean;
-  login: (id: IdentifiantsConnexion) => Promise<void>;
-  register: (d: DonneesInscription) => Promise<void>;
-  logout: () => Promise<void>;
-}
-
-const Contexte = createContext<AuthContexte | null>(null);
-
+/**
+ * Ne fournit plus de contexte : amorce simplement la session au démarrage
+ * (GET /auth/moi) pour savoir si le cookie httpOnly est encore valide.
+ */
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [utilisateur, setUtilisateur] = useState<Utilisateur | null>(null);
-  const [chargement, setChargement] = useState(true);
-
-  // Au chargement de l'app : la session (cookie) est-elle encore valide ?
   useEffect(() => {
-    api
-      .get<{ utilisateur: Utilisateur }>("/auth/moi")
-      .then((data) => setUtilisateur(data.utilisateur))
-      .catch(() => setUtilisateur(null))
-      .finally(() => setChargement(false));
+    // StrictMode monte les effets deux fois en dev : le store se charge de ne
+    // pas empiler deux appels (`chargement` est déjà à true au départ).
+    void useAuthStore.getState().chargerSession();
   }, []);
 
-  async function login(id: IdentifiantsConnexion) {
-    const data = await api.post<ReponseAuth>("/auth/login", id);
-    setUtilisateur(data.utilisateur);
-  }
-
-  async function register(d: DonneesInscription) {
-    const data = await api.post<ReponseAuth>("/auth/register", d);
-    setUtilisateur(data.utilisateur);
-  }
-
-  async function logout() {
-    try {
-      await api.post("/auth/logout");
-    } finally {
-      setUtilisateur(null);
-    }
-  }
-
-  return (
-    <Contexte.Provider value={{ utilisateur, chargement, login, register, logout }}>
-      {children}
-    </Contexte.Provider>
-  );
+  return <>{children}</>;
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
 export function useAuth() {
-  const ctx = useContext(Contexte);
-  if (!ctx) throw new Error("useAuth doit être utilisé dans <AuthProvider>.");
-  return ctx;
+  const utilisateur = useAuthStore((s) => s.utilisateur);
+  const chargement = useAuthStore((s) => s.chargement);
+  const connecter = useAuthStore((s) => s.connecter);
+  const inscrire = useAuthStore((s) => s.inscrire);
+  const deconnecter = useAuthStore((s) => s.deconnecter);
+
+  return {
+    utilisateur,
+    chargement,
+    login: (identifiants: IdentifiantsConnexion) => connecter(identifiants),
+    register: (donnees: DonneesInscription) => inscrire(donnees),
+    logout: () => deconnecter(),
+  };
 }
