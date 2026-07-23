@@ -721,3 +721,369 @@ select.afi-fld {
 .afi-btnrow--espacee {
   justify-content: space-between;
 }
+
+/* ---------- Cartes de soldes ---------- */
+
+.afi-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.afi-totcard {
+  background: var(--encre);
+  color: var(--accent);
+  border-radius: var(--rayon-carte-totale);
+  padding: 28px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 172px;
+  min-width: 260px;
+  flex: 1.15;
+}
+
+.afi-tot-amt {
+  font: 500 46px var(--police-titre);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin: 10px 0 0;
+  white-space: nowrap;
+}
+
+.afi-badge-cur {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font: 500 12px var(--police);
+  color: rgba(255, 255, 204, 0.65);
+  margin-top: 14px;
+}
+
+.afi-acct {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 172px;
+  min-width: 220px;
+}
+
+.afi-acct__tete {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--esp-2);
+}
+
+.afi-acct__nm {
+  font: 600 15px var(--police);
+}
+
+.afi-acct__ty {
+  font: 400 12px var(--police);
+  color: var(--texte-doux);
+  margin-top: 2px;
+}
+
+.afi-acct__bal {
+  font: 500 30px var(--police-titre);
+  letter-spacing: -0.02em;
+  margin-top: auto;
+  white-space: nowrap;
+}
+
+.afi-ic-sq {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--rayon-icone);
+  background: var(--surface-douce);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--encre);
+  flex: none;
+}
+
+/* ---------- Donut ---------- */
+
+.afi-donut-bloc {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-4);
+  flex-wrap: wrap;
+}
+
+.afi-donut {
+  flex: none;
+  position: relative;
+  width: 186px;
+  height: 186px;
+}
+
+.afi-donut__centre {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.afi-donut__valeur {
+  font: 500 22px var(--police-titre);
+  letter-spacing: -0.02em;
+}
+
+.afi-donut__legende-centre {
+  font: 400 11px var(--police);
+  color: var(--texte-doux);
+  margin-top: 2px;
+}
+
+.afi-donut__part {
+  transition: opacity 0.15s;
+  cursor: default;
+}
+
+.afi-donut__part:hover {
+  opacity: 0.78;
+}
+
+/* ---------- Légende ---------- */
+
+.afi-leg {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+  min-width: 240px;
+}
+
+.afi-leg__li {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font: 500 14px var(--police);
+}
+
+.afi-leg__sw {
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+  flex: none;
+}
+
+.afi-leg__nom {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.afi-leg__amt {
+  margin-left: auto;
+  font: 600 14px var(--police);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.afi-leg__pct {
+  width: 48px;
+  text-align: right;
+  color: var(--texte-doux);
+  font: 400 13px var(--police);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Grille du bas ---------- */
+
+.afi-grille-bas {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 1080px) {
+  .afi-grille-bas {
+    grid-template-columns: 1fr;
+  }
+}
+
+.afi-carte__tete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-2);
+  margin-bottom: var(--esp-3);
+  flex-wrap: wrap;
+}
+
+.afi-carte__titre {
+  font: 600 16px var(--police);
+  margin: 0;
+}
+
+.afi-lien {
+  background: none;
+  border: none;
+  padding: 0;
+  font: 500 13px var(--police);
+  color: var(--texte-doux);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.afi-lien:hover {
+  color: var(--encre);
+}
+
+/* ---------- Dernières transactions ---------- */
+
+.afi-derniere {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--hairline);
+  cursor: pointer;
+  text-align: left;
+  background: none;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  width: 100%;
+}
+
+.afi-derniere:last-child {
+  border-bottom: none;
+}
+
+.afi-derniere:hover .afi-derniere__lib {
+  text-decoration: underline;
+}
+
+.afi-derniere__corps {
+  flex: 1;
+  min-width: 0;
+}
+
+.afi-derniere__lib {
+  display: block;
+  font: 600 14px var(--police);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.afi-derniere__date {
+  display: block;
+  font: 400 12px var(--police);
+  color: var(--texte-doux);
+  margin-top: 2px;
+}
+
+.afi-derniere__amt {
+  font: 600 14px var(--police);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ---------- Salutation ---------- */
+
+.afi-salut {
+  margin-bottom: 22px;
+}
+
+.afi-salut p {
+  color: var(--texte-doux);
+  margin: 6px 0 0;
+  font-size: 14px;
+}
+
+.afi-derniere__corps {
+  flex: 1;
+  min-width: 0;
+  display: block;
+}
+
+/* Sélecteurs de période du dashboard : la pilule s'applique directement au
+   champ, contrairement aux filtres de l'historique où elle enveloppe un
+   <select> à l'intérieur. */
+.afi-periode {
+  height: var(--hauteur-pilule);
+  padding: 0 var(--esp-2);
+  background: var(--blanc);
+  border: 1px solid rgba(26, 26, 0, 0.16);
+  border-radius: var(--rayon-pill);
+  font: 500 13px var(--police);
+  color: var(--encre);
+  outline: none;
+  cursor: pointer;
+}
+
+.afi-periode:focus {
+  border-color: var(--encre);
+  box-shadow: var(--focus-halo);
+}
+
+/* ---------- Ligne de compte ---------- */
+
+.afi-compte-ligne {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  background: var(--blanc);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rayon-carte);
+  padding: 22px 26px;
+}
+
+.afi-compte-ligne__ident {
+  flex: 1;
+  min-width: 0;
+}
+
+.afi-compte-ligne__nom {
+  font: 600 16px var(--police);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.afi-compte-ligne__meta {
+  font: 400 13px var(--police);
+  color: var(--texte-doux);
+  margin-top: 3px;
+}
+
+.afi-compte-ligne__solde {
+  text-align: right;
+  flex: none;
+}
+
+.afi-compte-ligne__montant {
+  font: 500 26px var(--police-titre);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.afi-compte-ligne__mention {
+  font: 400 12px var(--police);
+  color: var(--texte-doux);
+  margin-top: 2px;
+}
+
+@media (max-width: 620px) {
+  .afi-compte-ligne {
+    padding: 18px;
+    gap: var(--esp-2);
+  }
+
+  .afi-compte-ligne__montant {
+    font-size: 20px;
+  }
+}

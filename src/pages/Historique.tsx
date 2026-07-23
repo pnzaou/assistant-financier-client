@@ -5,23 +5,17 @@ import { EtatVide } from "../components/EtatVide";
 import { Pagination } from "../components/Pagination";
 import { Skeleton } from "../components/Skeleton";
 import { IconePlus, IconeTransactions } from "../components/layout/icones";
-import {
-  useComptesStore,
-  useCategoriesStore,
-  useTransactionsStore,
-} from "../stores";
+import { useComptesStore, useCategoriesStore, useTransactionsStore } from "../stores";
 import { formaterDate, formaterMontantSigne } from "../lib/format";
 
 /**
  * Historique paginé et filtré (GET /transactions).
  *
- * Les filtres vivent en état local, pas dans l'URL : le store porte déjà une
- * garde anti-course, et l'écran n'a pas vocation à être partagé par lien.
- * Toute modification de filtre remet la page à 1 — sinon on demanderait la
- * page 7 d'un résultat qui n'en compte que 2.
+ * La pagination et les filtres envoyés à l'API vivent dans le store, qui porte
+ * la garde anti-course. Les valeurs des <select> restent en état local : le
+ * store ne conserve que les clés non vides, insuffisant pour réafficher l'état
+ * des contrôles.
  */
-
-const LIMITE = 20;
 
 export function Historique() {
   const navigate = useNavigate();
@@ -31,10 +25,12 @@ export function Historique() {
   const chargerCategories = useCategoriesStore((e) => e.chargerSiNecessaire);
 
   const transactions = useTransactionsStore((e) => e.items);
-  const page = useTransactionsStore((e) => e.page);
   const total = useTransactionsStore((e) => e.total);
+  const page = useTransactionsStore((e) => e.page);
+  const limite = useTransactionsStore((e) => e.limite);
   const chargement = useTransactionsStore((e) => e.chargement);
   const erreur = useTransactionsStore((e) => e.erreur);
+  const charger = useTransactionsStore((e) => e.charger);
   const definirFiltres = useTransactionsStore((e) => e.definirFiltres);
   const allerPage = useTransactionsStore((e) => e.allerPage);
 
@@ -43,28 +39,31 @@ export function Historique() {
   const [du, setDu] = useState("");
   const [au, setAu] = useState("");
 
-  // Sans état dérivé mis à jour dans un effet : une liste vide pendant le
-  // chargement initial affiche le squelette, tandis que les rechargements
-  // d'une liste déjà chargée conservent son contenu et l'estompent.
-  const premierChargement = chargement && transactions.length === 0;
-
   useEffect(() => {
     void chargerCategories();
   }, [chargerCategories]);
 
+  // Chargement initial uniquement : les changements de filtre et de page
+  // passent par definirFiltres / allerPage, qui rechargent eux-mêmes.
   useEffect(() => {
-    // `definirFiltres` remet elle-même la page à 1.
-    void definirFiltres({
-      // Filtres vides omis : l'API les traiterait comme des valeurs invalides.
-      ...(compteId ? { compteId } : {}),
-      ...(categorieId ? { categorieId } : {}),
-      ...(du ? { du } : {}),
-      ...(au ? { au } : {}),
-    });
-  }, [definirFiltres, compteId, categorieId, du, au]);
+    void charger();
+  }, [charger]);
 
-  function filtrer(appliquer: () => void) {
-    appliquer();
+  /** Applique un changement de filtre ; le store repart à la page 1. */
+  function filtrer(champs: Partial<Record<"compteId" | "categorieId" | "du" | "au", string>>) {
+    const suivant = { compteId, categorieId, du, au, ...champs };
+    setCompteId(suivant.compteId);
+    setCategorieId(suivant.categorieId);
+    setDu(suivant.du);
+    setAu(suivant.au);
+
+    void definirFiltres({
+      // Clés vides omises : l'API les refuserait.
+      ...(suivant.compteId ? { compteId: suivant.compteId } : {}),
+      ...(suivant.categorieId ? { categorieId: suivant.categorieId } : {}),
+      ...(suivant.du ? { du: suivant.du } : {}),
+      ...(suivant.au ? { au: suivant.au } : {}),
+    });
   }
 
   const filtresActifs = compteId !== "" || categorieId !== "" || du !== "" || au !== "";
@@ -74,6 +73,7 @@ export function Historique() {
     setCategorieId("");
     setDu("");
     setAu("");
+    void definirFiltres({});
   }
 
   const nomsCategories = useMemo(() => {
@@ -110,7 +110,7 @@ export function Historique() {
           <select
             aria-label="Filtrer par compte"
             value={compteId}
-            onChange={(e) => filtrer(() => setCompteId(e.target.value))}
+            onChange={(e) => filtrer({ compteId: e.target.value })}
           >
             <option value="">Tous</option>
             {(comptes ?? []).map((c) => (
@@ -126,7 +126,7 @@ export function Historique() {
           <select
             aria-label="Filtrer par catégorie"
             value={categorieId}
-            onChange={(e) => filtrer(() => setCategorieId(e.target.value))}
+            onChange={(e) => filtrer({ categorieId: e.target.value })}
           >
             <option value="">Toutes</option>
             {(categories ?? []).map((c) => (
@@ -144,7 +144,7 @@ export function Historique() {
             aria-label="Date de début"
             value={du}
             max={au || undefined}
-            onChange={(e) => filtrer(() => setDu(e.target.value))}
+            onChange={(e) => filtrer({ du: e.target.value })}
           />
         </div>
 
@@ -155,7 +155,7 @@ export function Historique() {
             aria-label="Date de fin"
             value={au}
             min={du || undefined}
-            onChange={(e) => filtrer(() => setAu(e.target.value))}
+            onChange={(e) => filtrer({ au: e.target.value })}
           />
         </div>
 
@@ -169,7 +169,7 @@ export function Historique() {
       <div className="afi-carte">
         {erreur ? (
           <div className="afi-bandeau-erreur">{erreur}</div>
-        ) : chargement && premierChargement ? (
+        ) : chargement && transactions.length === 0 ? (
           <SqueletteTable />
         ) : transactions.length === 0 ? (
           <EtatVide
@@ -198,8 +198,8 @@ export function Historique() {
           />
         ) : (
           <>
-            {/* Opacité pendant un rechargement : la liste reste lisible,
-                sans le clignotement d'un squelette à chaque changement de page. */}
+            {/* Opacité pendant un rechargement : la liste reste lisible, sans
+                le clignotement d'un squelette à chaque changement de page. */}
             <div style={{ opacity: chargement ? 0.55 : 1, transition: "opacity .15s" }}>
               <table className="afi-tbl">
                 <thead>
@@ -237,9 +237,7 @@ export function Historique() {
                       </td>
                       <td>
                         {t.categorieId ? (
-                          <ChipCategorie
-                            nom={nomsCategories.get(t.categorieId) ?? "Catégorie"}
-                          />
+                          <ChipCategorie nom={nomsCategories.get(t.categorieId) ?? "Catégorie"} />
                         ) : (
                           <span style={{ color: "var(--texte-faible)" }}>—</span>
                         )}
@@ -263,7 +261,7 @@ export function Historique() {
               </table>
             </div>
 
-            <Pagination page={page} limite={LIMITE} total={total} onChange={(p) => void allerPage(p)} />
+            <Pagination page={page} limite={limite} total={total} onChange={allerPage} />
           </>
         )}
       </div>
