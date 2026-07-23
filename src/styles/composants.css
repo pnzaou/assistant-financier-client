@@ -1,0 +1,723 @@
+/* ============================================================
+   AFI — Composants applicatifs (étape 1)
+   Valeurs extraites de la maquette « App AFI.dc.html ».
+   ============================================================ */
+
+@keyframes afi-shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+
+/* ---------- Carte de contenu ---------- */
+
+.afi-carte {
+  background: var(--blanc);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rayon-carte);
+  padding: var(--esp-3);
+}
+
+/* ---------- Titres de section ---------- */
+
+.afi-h2 {
+  font: 500 25px var(--police-titre);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.afi-kick {
+  font: 600 11px var(--police);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--texte-doux);
+  margin: 0;
+}
+
+/* ---------- Champs de formulaire ---------- */
+
+.afi-form {
+  max-width: 620px;
+}
+
+.afi-lbl {
+  font: 500 13px var(--police);
+  color: var(--texte);
+  margin: 20px 0 var(--esp-1);
+  display: block;
+}
+
+.afi-lbl:first-child {
+  margin-top: 0;
+}
+
+.afi-req {
+  color: var(--alerte);
+}
+
+.afi-fld {
+  width: 100%;
+  height: var(--hauteur-champ);
+  border: var(--bordure-champ);
+  border-radius: var(--rayon-champ);
+  padding: 0 var(--esp-2);
+  font: 400 15px var(--police);
+  color: var(--encre);
+  background: var(--blanc);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.afi-fld::placeholder {
+  color: var(--texte-faible);
+}
+
+.afi-fld:focus {
+  border-color: var(--encre);
+  box-shadow: var(--focus-halo);
+}
+
+.afi-fld[disabled] {
+  background: var(--fond-champ-inactif);
+  color: var(--texte-doux);
+  cursor: not-allowed;
+}
+
+.afi-fld--erreur,
+.afi-fld--erreur:focus {
+  border-color: var(--erreur);
+}
+
+textarea.afi-fld {
+  height: auto;
+  padding: 14px var(--esp-2);
+  resize: vertical;
+  min-height: 88px;
+  font-family: var(--police);
+}
+
+select.afi-fld {
+  cursor: pointer;
+  appearance: none;
+  padding-right: 44px;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1.5 6 6.5l5-5' stroke='%231a1a00' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 18px center;
+}
+
+.afi-hint {
+  font: 400 12.5px var(--police);
+  color: var(--texte-doux);
+  margin-top: var(--esp-1);
+}
+
+.afi-msg-erreur {
+  font: 400 12.5px var(--police);
+  color: var(--erreur);
+  margin-top: var(--esp-1);
+}
+
+/* ---------- Montant (devise en suffixe) ---------- */
+
+.afi-amtwrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.afi-amtwrap .afi-fld {
+  padding-right: 62px;
+}
+
+.afi-amtwrap__cur {
+  position: absolute;
+  right: 18px;
+  font: 500 15px var(--police);
+  color: var(--texte-doux);
+  pointer-events: none;
+}
+
+/* ---------- Segmented control ---------- */
+
+.afi-seg {
+  display: inline-flex;
+  background: var(--surface-douce);
+  border-radius: var(--rayon-pill);
+  padding: 4px;
+  gap: 4px;
+}
+
+.afi-seg button {
+  border: none;
+  background: transparent;
+  padding: 11px 22px;
+  border-radius: var(--rayon-pill);
+  font: 600 13.5px var(--police);
+  cursor: pointer;
+  color: var(--texte-doux);
+  transition: background 0.15s, color 0.15s;
+}
+
+.afi-seg button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.afi-seg button.afi-seg--on {
+  background: var(--encre);
+  color: var(--accent);
+}
+
+/* ---------- Switch ---------- */
+
+.afi-switch {
+  width: 48px;
+  height: 28px;
+  border-radius: var(--rayon-pill);
+  background: rgba(26, 26, 0, 0.18);
+  position: relative;
+  cursor: pointer;
+  transition: background 0.18s;
+  flex: none;
+  border: none;
+  padding: 0;
+}
+
+.afi-switch__knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--blanc);
+  transition: left 0.18s;
+}
+
+.afi-switch--on {
+  background: var(--encre);
+}
+
+.afi-switch--on .afi-switch__knob {
+  left: 23px;
+}
+
+.afi-switch:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.afi-switch-ligne {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  padding-top: var(--esp-3);
+  border-top: 1px solid var(--hairline);
+  margin-top: var(--esp-3);
+}
+
+.afi-switch-ligne__titre {
+  font: 600 14.5px var(--police);
+}
+
+.afi-switch-ligne__desc {
+  font: 400 12.5px var(--police);
+  color: var(--texte-doux);
+  margin-top: 2px;
+}
+
+/* ---------- Chip catégorie ---------- */
+
+.afi-cat {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 11px;
+  border-radius: var(--rayon-pill);
+  background: var(--surface-douce);
+  font: 500 12.5px var(--police);
+  white-space: nowrap;
+}
+
+.afi-cat__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: none;
+}
+
+/* ---------- Bandeau « catégorie suggérée » ---------- */
+
+.afi-sugg {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--accent);
+  border: 1.5px solid var(--encre);
+  border-radius: 18px;
+  padding: 18px 20px;
+  margin-top: 10px;
+}
+
+.afi-sugg__ic {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--encre);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.afi-sugg__txt {
+  font: 500 14.5px var(--police);
+  flex: 1;
+  line-height: 1.4;
+}
+
+.afi-sugg__txt b {
+  font-weight: 700;
+}
+
+.afi-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-1);
+  height: 40px;
+  padding: 0 var(--esp-2);
+  border-radius: var(--rayon-pill);
+  border: 1.5px solid var(--encre);
+  background: var(--blanc);
+  font: 600 13px var(--police);
+  cursor: pointer;
+  color: var(--encre);
+  flex: none;
+  transition: background 0.15s;
+}
+
+.afi-chip:hover {
+  background: var(--fond);
+}
+
+/* ---------- Boutons applicatifs ---------- */
+
+.afi-btn {
+  height: var(--hauteur-bouton-app);
+  border: none;
+  border-radius: var(--rayon-pill);
+  background: var(--encre);
+  color: var(--accent);
+  font: 600 14.5px var(--police);
+  cursor: pointer;
+  padding: 0 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  transition: background 0.15s;
+}
+
+.afi-btn:hover:not(:disabled) {
+  background: #33330a;
+}
+
+.afi-btn:disabled,
+.afi-btn-ghost:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.afi-btn-ghost {
+  height: var(--hauteur-bouton-app);
+  border: 1.5px solid rgba(26, 26, 0, 0.22);
+  border-radius: var(--rayon-pill);
+  background: var(--blanc);
+  color: var(--encre);
+  font: 600 14.5px var(--police);
+  cursor: pointer;
+  padding: 0 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.afi-btn-ghost:hover:not(:disabled) {
+  background: var(--fond);
+}
+
+.afi-btn-ghost--danger {
+  color: var(--erreur);
+  border-color: rgba(138, 43, 43, 0.35);
+}
+
+.afi-btn-ghost--danger:hover:not(:disabled) {
+  background: var(--erreur-fond);
+}
+
+.afi-btnrow {
+  display: flex;
+  gap: var(--esp-2);
+  margin-top: var(--esp-3);
+  flex-wrap: wrap;
+}
+
+/* ---------- Bandeau d'erreur global ---------- */
+
+.afi-bandeau-erreur {
+  background: var(--erreur-fond);
+  color: var(--erreur);
+  font: 400 14px var(--police);
+  padding: 12px var(--esp-2);
+  border-radius: var(--rayon-champ);
+  margin-bottom: var(--esp-2);
+}
+
+/* ---------- État vide ---------- */
+
+.afi-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 70px var(--esp-3);
+}
+
+.afi-empty__ic {
+  width: 88px;
+  height: 88px;
+  border-radius: 26px;
+  background: var(--surface-douce);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--texte-faible);
+  margin-bottom: var(--esp-3);
+}
+
+.afi-empty h3 {
+  font: 500 24px var(--police-titre);
+  margin: 0 0 var(--esp-1);
+}
+
+.afi-empty p {
+  font: 400 15px var(--police);
+  color: var(--texte-doux);
+  max-width: 420px;
+  margin: 0 0 26px;
+  line-height: 1.5;
+}
+
+/* ---------- Squelette de chargement ---------- */
+
+.afi-skel {
+  background: linear-gradient(90deg, #eceadf 25%, #f6f5ec 50%, #eceadf 75%);
+  background-size: 800px 100%;
+  animation: afi-shimmer 1.4s infinite linear;
+  border-radius: 10px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .afi-skel {
+    animation: none;
+  }
+}
+
+/* ---------- Filtres ---------- */
+
+.afi-filtres {
+  display: flex;
+  gap: var(--esp-2);
+  flex-wrap: wrap;
+  margin-bottom: var(--esp-3);
+  align-items: center;
+}
+
+.afi-filtre {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  height: var(--hauteur-pilule);
+  padding: 0 var(--esp-2);
+  background: var(--blanc);
+  border: 1px solid rgba(26, 26, 0, 0.16);
+  border-radius: var(--rayon-pill);
+  font: 500 13.5px var(--police);
+  color: var(--encre);
+  cursor: pointer;
+}
+
+.afi-filtre__label {
+  color: var(--texte-doux);
+}
+
+/* Le <select> se superpose à la pilule : l'apparence vient du parent. */
+.afi-filtre select {
+  border: none;
+  background: transparent;
+  font: 600 13.5px var(--police);
+  color: var(--encre);
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  padding-right: 18px;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' fill='none'%3E%3Cpath d='M1 1.5 5 5.5l4-4' stroke='%231a1a00' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 2px center;
+  max-width: 190px;
+  text-overflow: ellipsis;
+}
+
+.afi-filtre input[type="date"] {
+  border: none;
+  background: transparent;
+  font: 600 13.5px var(--police);
+  color: var(--encre);
+  outline: none;
+  cursor: pointer;
+}
+
+.afi-filtre--reinit {
+  border-style: dashed;
+  color: var(--texte-doux);
+}
+
+.afi-filtre--reinit:hover {
+  color: var(--encre);
+  border-color: var(--encre);
+}
+
+/* ---------- Tableau ---------- */
+
+.afi-tbl {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.afi-tbl th {
+  text-align: left;
+  font: 600 11px var(--police);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--texte-doux);
+  padding: 0 12px 14px;
+  white-space: nowrap;
+}
+
+.afi-tbl th.afi-tbl__droite,
+.afi-tbl td.afi-tbl__droite {
+  text-align: right;
+}
+
+.afi-tr {
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.afi-tr:hover {
+  background: var(--fond);
+}
+
+.afi-tr td {
+  padding: 15px 12px;
+  border-top: 1px solid var(--hairline);
+  font: 400 14px var(--police);
+  vertical-align: middle;
+}
+
+.afi-tr td.afi-montant {
+  text-align: right;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.afi-montant--positif {
+  color: var(--succes);
+}
+
+.afi-txnom {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.afi-txic {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--rayon-icone);
+  background: var(--surface-douce);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  color: var(--encre);
+}
+
+.afi-txlibelle {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.afi-tbl__note {
+  font: 400 12px var(--police);
+  color: var(--texte-doux);
+  margin-top: 2px;
+}
+
+/* Point discret : transaction pointée (rapprochée du relevé). */
+.afi-pointee {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--succes);
+  display: inline-block;
+  margin-left: var(--esp-1);
+  vertical-align: middle;
+}
+
+/* ---------- Pagination ---------- */
+
+.afi-pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-2);
+  margin-top: 22px;
+  font: 400 13px var(--police);
+  color: var(--texte-doux);
+  flex-wrap: wrap;
+}
+
+.afi-pg {
+  display: flex;
+  gap: 6px;
+}
+
+.afi-pg button {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 6px;
+  border-radius: 10px;
+  border: 1px solid rgba(26, 26, 0, 0.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 500 13px var(--police);
+  cursor: pointer;
+  background: var(--blanc);
+  color: var(--encre);
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.afi-pg button:hover:not(:disabled):not(.afi-pg--on) {
+  border-color: var(--encre);
+}
+
+.afi-pg button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.afi-pg button.afi-pg--on {
+  background: var(--encre);
+  color: var(--accent);
+  border-color: var(--encre);
+  cursor: default;
+}
+
+.afi-pg__ellipse {
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  color: var(--texte-faible);
+}
+
+/* ---------- En-tête de page ---------- */
+
+.afi-page-tete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-2);
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+
+/* ---------- Champs en lecture seule (compte, type) ---------- */
+
+.afi-lbl__mention {
+  font-weight: 400;
+  color: var(--texte-doux);
+}
+
+.afi-grille2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--esp-2);
+}
+
+@media (max-width: 620px) {
+  .afi-grille2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Retour ---------- */
+
+.afi-retour {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-1);
+  height: var(--hauteur-pilule);
+  padding: 0 var(--esp-2);
+  border: 1.5px solid rgba(26, 26, 0, 0.22);
+  border-radius: var(--rayon-pill);
+  background: var(--blanc);
+  font: 600 13.5px var(--police);
+  color: var(--encre);
+  cursor: pointer;
+  text-decoration: none;
+  margin-bottom: var(--esp-3);
+  transition: background 0.15s;
+}
+
+.afi-retour:hover {
+  background: var(--fond);
+}
+
+/* ---------- Confirmation de suppression ---------- */
+
+.afi-confirm {
+  background: var(--erreur-fond);
+  border: 1.5px solid rgba(138, 43, 43, 0.35);
+  border-radius: 18px;
+  padding: 20px;
+  margin-top: var(--esp-3);
+}
+
+.afi-confirm__titre {
+  font: 600 15px var(--police);
+  color: var(--erreur);
+  margin: 0 0 6px;
+}
+
+.afi-confirm__txt {
+  font: 400 13.5px/1.5 var(--police);
+  color: var(--texte);
+  margin: 0 0 var(--esp-2);
+}
+
+/* ---------- Séparateur d'actions ---------- */
+
+.afi-btnrow--espacee {
+  justify-content: space-between;
+}

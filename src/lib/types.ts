@@ -71,7 +71,7 @@ export interface Categorie {
 }
 
 // ── Transactions ─────────────────────────────────────────────────
-export type TypeTransaction = "DEPENSE" | "REVENU";
+export type TypeTransaction = "DEPENSE" | "REVENU" | "TRANSFERT";
 
 export interface Transaction {
   id: string;

@@ -1,0 +1,295 @@
+/* ============================================================
+   AFI — Coquille applicative (sidebar + topbar + contenu)
+   Importé dans main.tsx après global.css.
+   ============================================================ */
+
+/* ---------- Gabarit ---------- */
+
+.afi-app {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--fond-app);
+}
+
+.afi-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0; /* laisse le contenu rétrécir au lieu de déborder */
+}
+
+.afi-content {
+  flex: 1;
+  overflow: auto;
+  padding: 34px 40px;
+}
+
+/* ---------- Sidebar ---------- */
+
+.afi-side {
+  width: var(--sidebar-largeur);
+  flex: none;
+  background: var(--encre);
+  color: var(--accent);
+  display: flex;
+  flex-direction: column;
+  padding: 26px 20px;
+}
+
+.afi-side__brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 4px 8px;
+  margin-bottom: 30px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.afi-side__mark {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--rayon-icone);
+  background: var(--accent);
+  color: var(--encre);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.afi-side__wm {
+  font: 600 18px var(--police-titre);
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.afi-side__wm span {
+  display: block;
+  font: 500 10px var(--police);
+  letter-spacing: 0.02em;
+  color: var(--side-texte-faible);
+  margin-top: 3px;
+}
+
+.afi-side__label {
+  font: 600 10px var(--police);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--side-texte-tres-faible);
+  margin: 8px 12px 10px;
+}
+
+.afi-navi {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 12px 14px;
+  border-radius: var(--rayon-nav);
+  color: var(--side-texte-doux);
+  font: 500 14.5px var(--police);
+  cursor: pointer;
+  margin-bottom: 3px;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+
+.afi-navi:hover {
+  background: var(--side-survol);
+  color: var(--accent);
+}
+
+.afi-navi--actif,
+.afi-navi--actif:hover {
+  background: var(--accent);
+  color: var(--encre);
+  font-weight: 600;
+}
+
+.afi-navi svg {
+  flex: none;
+}
+
+/* Entrée désactivée (roadmap, pas d'API) */
+.afi-navi--inactif,
+.afi-navi--inactif:hover {
+  cursor: not-allowed;
+  background: transparent;
+  color: var(--side-texte-tres-faible);
+}
+
+.afi-navi__bientot {
+  margin-left: auto;
+  font: 600 9px var(--police);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--side-hairline);
+  border-radius: var(--rayon-pill);
+  padding: 3px 7px;
+}
+
+.afi-side__cta {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  height: var(--hauteur-cta);
+  border: none;
+  border-radius: var(--rayon-pill);
+  background: var(--accent);
+  color: var(--encre);
+  font: 600 14px var(--police);
+  cursor: pointer;
+  text-decoration: none;
+  transition: filter 0.15s;
+}
+
+.afi-side__cta:hover {
+  filter: brightness(0.94);
+}
+
+.afi-side__spacer {
+  flex: 1;
+}
+
+.afi-side__user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 10px;
+  border-top: 1px solid var(--side-hairline);
+  margin-top: 14px;
+}
+
+.afi-side__ava {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--rayon-icone);
+  background: var(--side-avatar-fond);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 600 14px var(--police-titre);
+  color: var(--accent);
+  flex: none;
+}
+
+.afi-side__ident {
+  min-width: 0;
+}
+
+.afi-side__nom {
+  font: 600 13.5px var(--police);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.afi-side__email {
+  font: 400 11.5px var(--police);
+  color: var(--side-texte-faible);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.afi-side__deconnexion {
+  margin-left: auto;
+  flex: none;
+  background: transparent;
+  border: none;
+  color: var(--side-texte-faible);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: var(--esp-1);
+  display: flex;
+  transition: color 0.15s, background 0.15s;
+}
+
+.afi-side__deconnexion:hover {
+  color: var(--accent);
+  background: var(--side-survol);
+}
+
+/* ---------- Topbar ---------- */
+
+.afi-topbar {
+  height: var(--topbar-hauteur);
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-3);
+  padding: 0 40px;
+  border-bottom: 1px solid var(--hairline);
+  background: var(--fond);
+}
+
+.afi-topbar__titre {
+  font: 500 22px var(--police-titre);
+  letter-spacing: -0.01em;
+}
+
+.afi-topbar__sous-titre {
+  font: 400 13px var(--police);
+  color: var(--texte-doux);
+  margin-top: 2px;
+}
+
+.afi-topbar__actions {
+  flex: none;
+}
+
+/* ---------- Chargement plein écran ---------- */
+/* Volontairement vide : un spinner qui clignote 200 ms gêne plus
+   qu'un fond neutre. */
+
+.afi-chargement-plein {
+  min-height: 100vh;
+  background: var(--fond-app);
+}
+
+/* ---------- Responsive ---------- */
+/* Sous 900px, la sidebar devient un rail d'icônes. */
+
+@media (max-width: 900px) {
+  .afi-side {
+    width: 76px;
+    padding: 20px 12px;
+    align-items: center;
+  }
+
+  .afi-side__wm,
+  .afi-side__label,
+  .afi-side__ident,
+  .afi-navi__libelle,
+  .afi-navi__bientot,
+  .afi-side__cta-libelle {
+    display: none;
+  }
+
+  .afi-side__brand,
+  .afi-navi,
+  .afi-side__cta {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .afi-side__user {
+    justify-content: center;
+  }
+
+  .afi-side__deconnexion {
+    margin-left: 0;
+  }
+
+  .afi-topbar,
+  .afi-content {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
