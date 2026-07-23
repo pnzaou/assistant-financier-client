@@ -35,4 +35,40 @@
   /* Typo */
   --police: "Inter", system-ui, -apple-system, sans-serif;
   --police-titre: "Manrope", "Inter", system-ui, sans-serif;
+
+  /* ===== Coquille applicative (sidebar + topbar) ===== */
+
+  /* Gabarit */
+  --sidebar-largeur: 264px;
+  --topbar-hauteur: 78px;
+
+  /* Fonds — trois niveaux distincts :
+     --fond      #faf9ef  topbar, survol de ligne, écrans d'auth
+     --fond-app  #f4f3ea  zone de contenu de l'app (plus soutenu)
+     --blanc     #ffffff  cartes                                    */
+  --fond-app: #f4f3ea;
+  --fond-champ-inactif: #f0efe6;
+
+  /* Sidebar : fond encre, texte accent */
+  --side-texte-doux: rgba(255, 255, 204, 0.72);
+  --side-texte-faible: rgba(255, 255, 204, 0.5);
+  --side-texte-tres-faible: rgba(255, 255, 204, 0.4);
+  --side-survol: rgba(255, 255, 204, 0.09);
+  --side-hairline: rgba(255, 255, 204, 0.14);
+  --side-avatar-fond: rgba(255, 255, 204, 0.16);
+
+  /* Rayons complémentaires */
+  --rayon-nav: 14px;
+  --rayon-icone: 12px;
+  --rayon-carte-totale: 22px;
+
+  /* Champs (états partagés) */
+  --bordure-champ: 1.5px solid rgba(26, 26, 0, 0.16);
+  --focus-halo: 0 0 0 3px rgba(26, 26, 0, 0.09);
+  --surface-douce: rgba(26, 26, 0, 0.06);
+
+  /* Hauteurs */
+  --hauteur-bouton-app: 54px;
+  --hauteur-cta: 48px;
+  --hauteur-pilule: 44px;
 }

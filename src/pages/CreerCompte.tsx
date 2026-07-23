@@ -2,7 +2,7 @@ import { useState, type FormEvent } from "react";
 import { Card } from "../components/Card";
 import { Field } from "../components/Field";
 import { Button } from "../components/Button";
-import { creerCompte } from "../lib/comptes";
+import { useComptesStore } from "../stores";
 import { LIBELLES_TYPE_COMPTE } from "../lib/format";
 import { ApiError } from "../lib/api";
 import type { TypeCompte } from "../lib/types";
@@ -21,7 +21,7 @@ export function CreerCompte({
   onCree,
 }: {
   premierCompte?: boolean;
-  onCree: () => void;
+  onCree?: () => void;
 }) {
   const [nom, setNom] = useState("");
   const [type, setType] = useState<TypeCompte>("COURANT");
@@ -30,19 +30,21 @@ export function CreerCompte({
   const [erreurGlobale, setErreurGlobale] = useState<string | null>(null);
   const [envoi, setEnvoi] = useState(false);
 
+  const creer = useComptesStore((e) => e.creer);
+
   async function soumettre(e: FormEvent) {
     e.preventDefault();
     setErreurs({});
     setErreurGlobale(null);
     setEnvoi(true);
     try {
-      await creerCompte({
+      await creer({
         nom,
         type,
         soldeInitial: soldeInitial === "" ? 0 : Number(soldeInitial),
         devise: "XOF",
       });
-      onCree();
+      onCree?.();
     } catch (err) {
       if (err instanceof ApiError && err.erreurs) {
         const parChamp: Record<string, string> = {};
