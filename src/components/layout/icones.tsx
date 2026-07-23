@@ -110,3 +110,31 @@ export function GlypheAfi({ taille = 20 }: PropsIcone) {
     </svg>
   );
 }
+
+export function IconeFleicheGauche({ taille = 16 }: PropsIcone) {
+  return (
+    <svg width={taille} height={taille} viewBox="0 0 18 18" fill="none" aria-hidden="true">
+      <path
+        d="M14.5 9h-11m0 0 4.5-4.5M3.5 9 8 13.5"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function IconeCorbeille({ taille = 17 }: PropsIcone) {
+  return (
+    <svg width={taille} height={taille} viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path
+        d="M3.5 5.5h13M8 5.5V4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1.5M5.5 5.5l.7 10a1.5 1.5 0 0 0 1.5 1.4h4.6a1.5 1.5 0 0 0 1.5-1.4l.7-10"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
