@@ -152,3 +152,14 @@ export interface PeriodeDashboard {
   du?: string;
   au?: string;
 }
+
+/** Un message dans le fil de conversation avec l'assistant.
+ *  Purement côté client : le serveur ne renvoie que du texte, il gère
+ *  lui-même la mémoire (en RAM, effacée à son redémarrage). */
+export interface MessageChat {
+  id: string;
+  role: "utilisateur" | "assistant";
+  contenu: string;
+  /** Vrai pour une bulle d'erreur (réseau, etc.), stylée différemment. */
+  erreur?: boolean;
+}

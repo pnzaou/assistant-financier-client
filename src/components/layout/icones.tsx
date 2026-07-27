@@ -138,3 +138,17 @@ export function IconeCorbeille({ taille = 17 }: PropsIcone) {
     </svg>
   );
 }
+
+export function IconeEnvoyer({ taille = 18 }: PropsIcone) {
+  return (
+    <svg width={taille} height={taille} viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path
+        d="M17 10 3.5 4.5l2.2 5.5-2.2 5.5L17 10Z"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+      <path d="M6 10h11" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}

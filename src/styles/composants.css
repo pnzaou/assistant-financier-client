@@ -1087,3 +1087,187 @@ select.afi-fld {
     font-size: 20px;
   }
 }
+
+/* ---------- Assistant (conversation) ---------- */
+
+/* La conversation occupe toute la hauteur disponible sous la topbar :
+   le fil défile, la barre de saisie reste ancrée en bas. */
+.afi-chat {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.afi-chat__fil {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 4px 4px 20px;
+}
+
+.afi-bulle {
+  max-width: 78%;
+  padding: 14px 18px;
+  border-radius: 20px;
+  font: 400 14.5px/1.55 var(--police);
+  white-space: pre-wrap; /* respecte les \n renvoyés par l'assistant */
+  word-break: break-word;
+}
+
+.afi-bulle--assistant {
+  align-self: flex-start;
+  background: var(--blanc);
+  border: 1px solid var(--hairline);
+  border-bottom-left-radius: 6px;
+  color: var(--encre);
+}
+
+.afi-bulle--utilisateur {
+  align-self: flex-end;
+  background: var(--encre);
+  color: var(--accent);
+  border-bottom-right-radius: 6px;
+}
+
+.afi-bulle--erreur {
+  align-self: flex-start;
+  background: var(--erreur-fond);
+  border: 1px solid rgba(138, 43, 43, 0.3);
+  border-bottom-left-radius: 6px;
+  color: var(--erreur);
+}
+
+/* Indicateur « écrit… » : trois points qui pulsent */
+.afi-typing {
+  align-self: flex-start;
+  background: var(--blanc);
+  border: 1px solid var(--hairline);
+  border-radius: 20px;
+  border-bottom-left-radius: 6px;
+  padding: 16px 20px;
+  display: flex;
+  gap: 5px;
+}
+
+.afi-typing span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--texte-faible);
+  animation: afi-typing 1.2s infinite ease-in-out;
+}
+
+.afi-typing span:nth-child(2) {
+  animation-delay: 0.18s;
+}
+
+.afi-typing span:nth-child(3) {
+  animation-delay: 0.36s;
+}
+
+@keyframes afi-typing {
+  0%,
+  60%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .afi-typing span {
+    animation: none;
+    opacity: 0.5;
+  }
+}
+
+/* ---------- Suggestions d'amorce ---------- */
+
+.afi-suggest {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-1);
+  padding: 4px 4px 16px;
+}
+
+.afi-suggest button {
+  border: 1.5px solid rgba(26, 26, 0, 0.16);
+  background: var(--blanc);
+  border-radius: var(--rayon-pill);
+  padding: 9px 15px;
+  font: 500 13px var(--police);
+  color: var(--encre);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.afi-suggest button:hover {
+  background: var(--fond);
+  border-color: var(--encre);
+}
+
+/* ---------- Barre de saisie ---------- */
+
+.afi-saisie {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--esp-1);
+  padding-top: var(--esp-2);
+  border-top: 1px solid var(--hairline);
+}
+
+.afi-saisie textarea {
+  flex: 1;
+  resize: none;
+  border: var(--bordure-champ);
+  border-radius: 18px;
+  padding: 14px 16px;
+  font: 400 14.5px/1.4 var(--police);
+  color: var(--encre);
+  background: var(--blanc);
+  outline: none;
+  max-height: 140px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.afi-saisie textarea:focus {
+  border-color: var(--encre);
+  box-shadow: var(--focus-halo);
+}
+
+.afi-saisie textarea:disabled {
+  background: var(--fond-champ-inactif);
+  cursor: not-allowed;
+}
+
+.afi-envoi {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: var(--encre);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex: none;
+  transition: background 0.15s;
+}
+
+.afi-envoi:hover:not(:disabled) {
+  background: #33330a;
+}
+
+.afi-envoi:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

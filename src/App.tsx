@@ -21,6 +21,7 @@ import { NouveauCompte } from "./pages/NouveauCompte";
 import { Historique } from "./pages/Historique";
 import { NouvelleTransaction } from "./pages/NouvelleTransaction";
 import { DetailTransaction } from "./pages/DetailTransaction";
+import { Assistant } from "./pages/Assistant";
 
 /**
  * Arbre de routes en trois niveaux :
@@ -60,6 +61,7 @@ function App() {
                 <Route path="/transactions/nouvelle" element={<NouvelleTransaction />} />
                 <Route path="/transactions/:id" element={<DetailTransaction />} />
                 <Route path="/comptes" element={<Comptes />} />
+                <Route path="/assistant" element={<Assistant />} />
               </Route>
             </Route>
           </Route>
