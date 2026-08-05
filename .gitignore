@@ -12,6 +12,18 @@ dist
 dist-ssr
 *.local
 
+# .env.e2e est généré par la CI et contient une clé privée JWT : jamais commité.
+.env
+.env.*
+!.env.example
+
+# Tests
+coverage
+resultats-e2e
+playwright-report
+test-results
+.playwright
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

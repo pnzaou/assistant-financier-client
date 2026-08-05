@@ -19,16 +19,23 @@ EXPOSE 5173
 CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "5173"]
 
 # ─── Build de production (site statique) ─────────────────────────
-# Vite fige les variables VITE_* au moment du build :
-#   docker build --target prod --build-arg VITE_API_URL=https://api.mondomaine.com -t assistant-financier-client .
+# L'URL de l'API n'est PLUS figée ici : elle est injectée au démarrage du
+# conteneur (voir docker-entrypoint.sh), pour qu'une même image serve staging
+# et prod. VITE_API_URL ne reste qu'en dernier recours (build hors conteneur).
 FROM deps AS build
 COPY . .
-ARG VITE_API_URL=http://localhost:5000
-ENV VITE_API_URL=$VITE_API_URL
 RUN npm run build
 
 # ─── Image de production : nginx sert dist/ ──────────────────────
 FROM nginx:1.29-alpine AS prod
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/dist /usr/share/nginx/html
+COPY config-runtime.sh /docker-entrypoint.d/40-config-runtime.sh
+RUN chmod +x /docker-entrypoint.d/40-config-runtime.sh
+
+# L'image nginx officielle exécute déjà tout /docker-entrypoint.d/*.sh avant de
+# lancer nginx ; on s'y greffe plutôt que de remplacer son ENTRYPOINT.
+# Configuration au démarrage :
+#   docker run -e API_URL=https://api.mondomaine.com assistant-financier-client
+ENV API_URL=""
 EXPOSE 80

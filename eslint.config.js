@@ -6,7 +6,9 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  // `coverage` et `resultats-e2e` contiennent des rapports HTML/JS générés :
+  // les linter n'a aucun sens et remonte des avertissements sur du code tiers.
+  globalIgnores(['dist', 'coverage', 'resultats-e2e', 'playwright-report']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
