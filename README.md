@@ -27,28 +27,46 @@ La page d'accueil vérifie automatiquement la connexion à l'API (`/health`).
 
 ## Appeler l'API
 
-Toujours passer par la variable injectée par le compose (jamais d'URL en dur) :
+Toujours passer par `src/lib/config.ts` (jamais d'URL en dur, jamais
+`import.meta.env` directement) :
 
 ```ts
-const API = import.meta.env.VITE_API_URL ?? "http://localhost:5000";
-fetch(`${API}/health`, { credentials: "include" });
+import { API_URL } from "./lib/config";
+fetch(`${API_URL}/health`, { credentials: "include" });
 ```
+
+`API_URL` est résolue dans cet ordre : `window.__CONFIG__.apiUrl` (injectée au
+démarrage du conteneur) → `VITE_API_URL` (dev) → `http://localhost:5000`.
 
 ## Build de production
 
-L'image finale est un nginx qui sert le site statique. Les variables `VITE_*`
-sont **figées au moment du build** :
+L'image finale est un nginx qui sert le site statique. L'URL de l'API n'est
+**pas** figée au build : elle est écrite dans `/config.js` au démarrage du
+conteneur par `config-runtime.sh`. Une seule image sert donc tous les
+environnements.
 
 ```bash
-docker build --target prod --build-arg VITE_API_URL=https://api.mondomaine.com -t assistant-financier-client .
-docker run --rm -p 8080:80 assistant-financier-client   # test local sur http://localhost:8080
+docker build --target prod -t assistant-financier-client .
+docker run --rm -p 8080:80 -e API_URL=https://api.mondomaine.com assistant-financier-client
 ```
 
-## CI (GitHub Actions)
+Le conteneur expose aussi `/healthz` pour les probes Kubernetes.
 
-À chaque push et sur chaque pull request (`.github/workflows/ci.yml`) :
-lint ESLint, build complet (`tsc` + Vite) et build de l'image Docker de
-production. Résultat ✅/❌ sur chaque commit, détail dans l'onglet **Actions**.
+## Tests
+
+```bash
+npm test              # unitaires + composants (Vitest + Testing Library)
+npm run test:coverage # idem + rapport lcov (consommé par SonarCloud)
+npm run test:e2e      # IHM / e2e (Playwright) — nécessite l'API sur :5000
+```
+
+Les specs Playwright vivent dans `e2e/`, les tests unitaires à côté du code
+qu'ils couvrent (`src/**/*.test.ts`).
+
+## CI/CD (GitHub Actions)
+
+Voir [CONTRIBUTING.md](./CONTRIBUTING.md) pour la stratégie de branching et la
+liste complète des vérifications.
 
 ## Notes
 

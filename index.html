@@ -19,6 +19,13 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600&display=swap"
       rel="stylesheet"
     />
+
+    <!--
+      Configuration injectée au DÉMARRAGE du conteneur (voir docker-entrypoint.sh),
+      pas au build : c'est ce qui permet à une seule image de servir staging et
+      prod. Doit être chargé avant le bundle, d'où l'absence de `defer`.
+    -->
+    <script src="/config.js"></script>
 </head>
   <body>
     <div id="root"></div>
