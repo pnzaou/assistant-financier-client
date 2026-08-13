@@ -30,3 +30,5 @@ export {
   useTotalGlobal,
   invaliderDashboard,
 } from "./dashboardStore";
+
+export * from "./chatbotStore";

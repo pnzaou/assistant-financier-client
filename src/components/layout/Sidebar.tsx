@@ -30,7 +30,7 @@ const ENTREES: EntreeNav[] = [
   { chemin: "/", libelle: "Tableau de bord", icone: <IconeTableauDeBord /> },
   { chemin: "/transactions", libelle: "Transactions", icone: <IconeTransactions /> },
   { chemin: "/comptes", libelle: "Comptes", icone: <IconeComptes /> },
-  { chemin: "/assistant", libelle: "Assistant", icone: <IconeAssistant />, bientot: true },
+  { chemin: "/assistant", libelle: "Assistant", icone: <IconeAssistant /> },
 ];
 
 /** Initiales de l'avatar : « Perrin Nzaou » → « PN ». */
@@ -71,11 +71,9 @@ export function Sidebar() {
               key={entree.chemin}
               className="afi-navi afi-navi--inactif"
               aria-disabled="true"
-              title="Bientôt disponible"
             >
               {entree.icone}
               <span className="afi-navi__libelle">{entree.libelle}</span>
-              <span className="afi-navi__bientot">Bientôt</span>
             </div>
           ) : (
             <NavLink
