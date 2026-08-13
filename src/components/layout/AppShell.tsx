@@ -24,6 +24,7 @@ const TITRES: Record<string, Titre> = {
   "/transactions/nouvelle": { titre: "Nouvelle transaction", sousTitre: "Ajouter un mouvement" },
   "/comptes": { titre: "Comptes", sousTitre: "Vos comptes et leurs soldes" },
   "/comptes/nouveau": { titre: "Nouveau compte", sousTitre: "Ajouter un compte à suivre" },
+  "/assistant": { titre: "Assistant", sousTitre: "Votre conseiller financier" },
 };
 
 /** Correspondance par préfixe pour les routes à paramètre (/transactions/:id). */

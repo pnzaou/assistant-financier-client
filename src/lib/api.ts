@@ -1,4 +1,4 @@
-const API = import.meta.env.VITE_API_URL ?? "http://localhost:5000";
+import { API_URL as API } from "./config";
 
 export interface ErreurChamp {
   champ: string;

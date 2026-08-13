@@ -2,6 +2,28 @@ node_modules
 dist
 .git
 .gitignore
+.gitattributes
 README.md
+CONTRIBUTING.md
 Dockerfile
 .dockerignore
+
+# Sorties de tests : jamais utiles au build, et les laisser entrer invaliderait
+# le cache Docker à chaque exécution de la suite.
+coverage
+resultats-e2e
+playwright-report
+test-results
+
+# Outillage CI : sans rapport avec le contenu servi par nginx.
+.github
+.zap
+docker-compose*.yml
+sonar-project.properties
+.env*
+
+# NOTE : e2e/, playwright.config.ts, vitest.config.ts et tsconfig.test.json
+# restent volontairement dans le contexte. `npm run build` lance `tsc -b`, qui
+# construit les trois projets référencés par tsconfig.json — retirer les
+# sources de l'un d'eux ferait échouer le build avec « No inputs were found ».
+# Rien de tout ça n'atteint l'image finale : le stage prod ne copie que dist/.

@@ -54,7 +54,7 @@ export function DetailTransaction() {
   const categories = useCategoriesStore((e) => e.categories);
   const chargerCategories = useCategoriesStore((e) => e.chargerSiNecessaire);
 
-  const obtenir = useTransactionsStore((e) => e.charger);
+  const obtenir = useTransactionsStore((e) => e.chargerUneTransaction);
   const modifier = useTransactionsStore((e) => e.modifier);
   const supprimer = useTransactionsStore((e) => e.supprimer);
 
@@ -87,7 +87,7 @@ export function DetailTransaction() {
       setChargement(true);
       setIntrouvable(false);
       try {
-        const t = await (obtenir as unknown as (transactionId: string) => Promise<Transaction>)(id);
+        const t = await obtenir(id);
         if (annule) return;
         setTransaction(t);
         remplir(t);

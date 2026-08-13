@@ -1,0 +1,16 @@
+# Règles passives ZAP — application web (SPA React servie par nginx).
+# Format : ID<TAB>ACTION<TAB>commentaire     (ACTION = IGNORE | WARN | FAIL)
+#
+# Contrairement à l'API, le front rend du HTML dans un navigateur : les règles
+# d'en-têtes de sécurité s'y appliquent pleinement et restent actives.
+10109	IGNORE	Modern Web Application — détection informative, pas une vulnérabilité
+10049	IGNORE	Contenu non mis en cache — /config.js est volontairement en no-store
+
+# À traiter en priorité : ce sont les en-têtes qui manquent réellement au nginx
+# (voir nginx.conf). Laissés en WARN le temps de les ajouter, puis à passer FAIL.
+10038	WARN	Content-Security-Policy absente
+10020	WARN	Anti-clickjacking (X-Frame-Options / frame-ancestors) absent
+10021	WARN	X-Content-Type-Options manquant
+10063	WARN	Permissions-Policy absente
+10035	WARN	Strict-Transport-Security absente — normal en HTTP, à vérifier derrière l'ingress
+10036	WARN	Version du serveur exposée (`Server: nginx/…`)
