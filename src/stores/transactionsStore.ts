@@ -25,6 +25,7 @@ interface EtatTransactions {
   erreur: string | null;
 
   charger: () => Promise<void>;
+  chargerUneTransaction: (id: string) => Promise<Transaction>;
   /** Remplace les filtres et repart à la page 1. */
   definirFiltres: (filtres: FiltresActifs) => Promise<void>;
   allerPage: (page: number) => Promise<void>;
@@ -84,6 +85,14 @@ export const useTransactionsStore = create<EtatTransactions>()((set, get) => ({
         erreur: messageErreur(err, "Impossible de charger vos transactions."),
       });
     }
+  },
+
+  chargerUneTransaction: async (id) => {
+    const { transaction } = await transactionsApi.obtenirTransaction(id);
+    set((etat) => ({
+      items: etat.items.some((t) => t.id === id) ? etat.items.map((t) => (t.id === id ? transaction : t)) : [transaction, ...etat.items],
+    }));
+    return transaction;
   },
 
   definirFiltres: async (filtres) => {
