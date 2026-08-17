@@ -64,7 +64,7 @@ jobs:
         run: npm run test:coverage
 
       - name: Conservation du rapport de couverture
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: couverture-client
           path: coverage/lcov.info
@@ -111,7 +111,7 @@ jobs:
       # diagnostiquer un échec qu'on ne reproduit pas en local.
       - name: Conservation du rapport e2e
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: rapport-e2e
           path: resultats-e2e/
